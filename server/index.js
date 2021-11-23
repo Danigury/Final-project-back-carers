@@ -10,7 +10,7 @@ app.use(cors);
 const initializeServer = (port) =>
   new Promise((resolve) => {
     const server = app.listen(port, () => {
-      debug(chalk.green(`Connecting to ${port}`));
+      debug(chalk.bgGreen(`Connecting to ${port}`));
       resolve(server);
     });
 
