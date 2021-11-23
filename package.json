@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npx jest --coverage",
     "start": "node .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "git-hook": "eslint --ignore-path .gitignore ."
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,8 @@
   "devDependencies": {
     "eslint": "^8.3.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.3",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
     "husky": "^7.0.0"
   },
   "dependencies": {
