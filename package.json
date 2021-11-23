@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest --coverage",
+    "test": "npx jest",
     "start": "node .",
     "prepare": "husky install",
     "git-hook": "eslint --ignore-path .gitignore ."
