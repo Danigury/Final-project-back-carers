@@ -4,9 +4,17 @@ const {
   getLocationById,
   getLocationByType,
   createLocation,
+  isAuthorized,
 } = require("./locationControllers");
 
 jest.mock("../../database/models/location");
+
+const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
 
 describe("Given a getLocation function", () => {
   describe("When it receives an object res", () => {
@@ -184,6 +192,63 @@ describe("Given a createLocation function", () => {
 
       expect(Location.create).toHaveBeenCalled();
       expect(res.json).toHaveBeenCalledWith(location);
+    });
+  });
+
+  describe("When it receives an object res and an invalid object req", () => {
+    test("Then it should invoke next with an error", async () => {
+      const req = {};
+      const error = {};
+
+      Location.create = jest.fn().mockRejectedValue(error);
+
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+
+      await createLocation(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+});
+
+describe("Given a isAuthorized function", () => {
+  describe("When it receives an object req with a correct token", () => {
+    test("Then it should invoke the function next", async () => {
+      const req = {
+        query: {
+          token: process.env.TOKEN,
+        },
+      };
+
+      const res = {};
+
+      const next = jest.fn();
+
+      await isAuthorized(req, res, next);
+
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe("When it receives an object req with an incorrect token", () => {
+    test("Then it should respond with an error", async () => {
+      const req = {
+        query: {
+          token: "Unauthorised",
+        },
+      };
+
+      const res = mockResponse();
+
+      const next = jest.fn();
+
+      await isAuthorized(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.json).toHaveBeenCalled();
     });
   });
 });

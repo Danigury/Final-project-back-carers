@@ -97,6 +97,7 @@ const isAuthorized = (req, res, next) => {
     next();
   } else {
     debug(chalk.bgRed("Unauthorised"));
+    res.status(401).json({ error: "Unauthorised" });
   }
 };
 
