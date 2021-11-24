@@ -3,6 +3,7 @@ const {
   getLocations,
   getLocationById,
   getLocationByType,
+  createLocation,
 } = require("./locationControllers");
 
 jest.mock("../../database/models/location");
@@ -155,6 +156,34 @@ describe("Given a getLocationByType", () => {
       await getLocationByType(req, res, next);
 
       expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+});
+
+describe("Given a createLocation function", () => {
+  describe("When it receives a res object and a req object with a body", () => {
+    test("Then it should invoke the json method of res and call Location.create function", async () => {
+      const location = {
+        id: 1,
+        name: "Menjador Social Gregal",
+        gender: true,
+        type: "Comedor",
+      };
+
+      const req = {
+        body: location,
+      };
+
+      Location.create = jest.fn().mockResolvedValue(location);
+      const res = {
+        json: jest.fn(),
+      };
+
+      const next = () => {};
+      await createLocation(req, res, next);
+
+      expect(Location.create).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith(location);
     });
   });
 });
