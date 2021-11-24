@@ -5,7 +5,10 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const app = express();
-app.use(cors);
+
+const { notFoundErrorHandler, errorHandler } = require("./middlewares/error");
+const locationRoutes = require("./routes/locationsRoutes");
+const usersRoutes = require("./routes/usersRoutes");
 
 const initializeServer = (port) =>
   new Promise((resolve) => {
@@ -29,6 +32,12 @@ const initializeServer = (port) =>
   });
 
 app.use(morgan("dev"));
+app.use(cors());
 app.use(express.json());
+
+app.use("/location", locationRoutes);
+app.use("/user", usersRoutes);
+app.use(notFoundErrorHandler);
+app.use(errorHandler);
 
 module.exports = { initializeServer, app };
