@@ -5,10 +5,17 @@ const locationSchema = new Schema({
     type: String,
     required: true,
   },
+
+  gender: {
+    type: Boolean,
+    required: true,
+  },
+
   type: {
     type: String,
     required: true,
   },
+
   addres: {
     street: {
       type: String,
