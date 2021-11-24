@@ -16,7 +16,7 @@ const locationSchema = new Schema({
     required: true,
   },
 
-  addres: {
+  address: {
     street: {
       type: String,
       required: true,
