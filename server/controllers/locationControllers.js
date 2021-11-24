@@ -78,7 +78,7 @@ const deleteLocation = async (req, res, next) => {
   try {
     const searchedLocation = await Location.findByIdAndDelete(idLocation);
     if (searchedLocation) {
-      res.json({ id: searchedLocation.id });
+      res.json(searchedLocation);
     } else {
       const error = new Error("Location not found");
       error.code = 404;

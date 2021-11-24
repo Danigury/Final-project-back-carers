@@ -5,6 +5,8 @@ const {
   getLocationByType,
   createLocation,
   isAuthorized,
+  updateLocation,
+  deleteLocation,
 } = require("./locationControllers");
 
 jest.mock("../../database/models/location");
@@ -48,7 +50,7 @@ describe("Given a getLocation function", () => {
 });
 
 describe("Given a getLocationById function", () => {
-  describe("When it receives a request with an locationId 1 a response and the next function", () => {
+  describe("When it receives a request with a locationId 1 a response and the next function", () => {
     test("Then it should call Location.findById with a number 1", async () => {
       const idLocation = 1;
       const req = {
@@ -249,6 +251,108 @@ describe("Given a isAuthorized function", () => {
 
       expect(res.status).toHaveBeenCalledWith(401);
       expect(res.json).toHaveBeenCalled();
+    });
+  });
+});
+
+describe("Given an updateLocation function", () => {
+  describe("When it receives an object res and an object req with a body", () => {
+    test("Then it should invoke method json of res and call the Location.findByIdAndUpdate function", async () => {
+      const req = {
+        body: {
+          _id: 4,
+        },
+      };
+
+      Location.findByIdAndUpdate = jest.fn();
+      const res = {
+        json: jest.fn(),
+      };
+      const next = () => {};
+
+      await updateLocation(req, res, next);
+
+      expect(Location.findByIdAndUpdate).toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalled();
+    });
+  });
+
+  describe("When it receives an object res and an invalid object req", () => {
+    test("Then it should invoke next with an error", async () => {
+      const req = {};
+      const error = {};
+
+      Location.findByIdAndUpdate = jest.fn().mockRejectedValue(error);
+
+      const res = {
+        json: jest.fn(),
+      };
+      const next = jest.fn();
+
+      await updateLocation(req, res, next);
+
+      expect(next).toHaveBeenCalled();
+    });
+  });
+});
+
+describe("Given a deleteLocation function", () => {
+  describe("When it receives a request with a locationId 1 a response and the next function", () => {
+    test("Then it should call Location.findByIdAndDelete with a number 1", async () => {
+      const idLocation = 1;
+      const req = {
+        params: {
+          idLocation,
+        },
+      };
+
+      const res = {
+        json: jest.fn(),
+      };
+
+      const next = () => {};
+      Location.findByIdAndDelete = jest.fn().mockResolvedValue({});
+      await deleteLocation(req, res, next);
+      expect(Location.findByIdAndDelete).toHaveBeenCalledWith(idLocation);
+      expect(res.json).toHaveBeenCalled();
+    });
+  });
+  describe("When Location.findByIdAndDelete rejects", () => {
+    test("Then it should call function next with an error 400", async () => {
+      const error = {};
+      Location.findByIdAndDelete = jest.fn().mockRejectedValue(error);
+      const req = {
+        params: {
+          id: 10,
+        },
+      };
+
+      const res = {};
+
+      const next = jest.fn();
+      await deleteLocation(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
+      expect(error.code).toBe(400);
+    });
+  });
+
+  describe("And Location.findByIdAndDelete return undefined", () => {
+    test("Then it should call next with an error", async () => {
+      const error = new Error("Location not found");
+      Location.findByIdAndDelete = jest.fn().mockResolvedValue(undefined);
+      const req = {
+        params: {
+          id: 1,
+        },
+      };
+
+      const res = {};
+      const next = jest.fn();
+
+      await deleteLocation(req, res, next);
+      expect(next).toHaveBeenCalledWith(error);
     });
   });
 });
