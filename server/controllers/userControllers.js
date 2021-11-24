@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const chalk = require("chalk");
 const jwt = require("jsonwebtoken");
 const User = require("../../database/models/user");
+require("../../database/models/location");
 
 const userLogin = async (req, res, next) => {
   const { username, password } = req.body;
@@ -51,16 +52,12 @@ const userSignUp = async (req, res, next) => {
   }
 };
 
-const getUsers = async (req, res) => {
-  debug(chalk.bgYellow("Loading users"));
-  const users = await User.find();
-  res.json(users);
-};
-
 const getUserById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const searchedUser = await User.findById(id);
+    const searchedUser = await User.findById(id).populate({
+      path: "agenda",
+    });
     if (searchedUser) {
       res.json(searchedUser);
     } else {
@@ -75,4 +72,4 @@ const getUserById = async (req, res, next) => {
   }
 };
 
-module.exports = { userLogin, userSignUp, getUsers, getUserById };
+module.exports = { userLogin, userSignUp, getUserById };
