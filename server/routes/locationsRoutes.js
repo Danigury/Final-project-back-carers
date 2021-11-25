@@ -1,5 +1,5 @@
 const express = require("express");
-// const auth = require("../middlewares/auth");
+const auth = require("../middlewares/auth");
 
 const {
   getLocations,
@@ -12,11 +12,11 @@ const {
 
 const router = express.Router();
 
-router.get("/", getLocations);
-router.get("/:idLocation", getLocationById);
-router.get("/type/:type", getLocationByType);
-router.post("/create", createLocation);
-router.put("/:idLocation", updateLocation);
-router.delete("/:idLocation", deleteLocation);
+router.get("/", auth, getLocations);
+router.get("/:idLocation", auth, getLocationById);
+router.get("/type/:type", auth, getLocationByType);
+router.post("/create", auth, createLocation);
+router.put("/:idLocation", auth, updateLocation);
+router.delete("/:idLocation", auth, deleteLocation);
 
 module.exports = router;

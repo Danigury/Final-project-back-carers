@@ -22,7 +22,7 @@ const locationSchema = new Schema({
       required: true,
     },
     postcode: {
-      type: Number,
+      type: String,
       required: true,
     },
     coordinates: {
@@ -51,7 +51,7 @@ const locationSchema = new Schema({
         required: true,
       },
       time: {
-        type: Number,
+        type: String,
         required: true,
       },
     },
