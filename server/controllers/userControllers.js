@@ -10,7 +10,7 @@ const userLogin = async (req, res, next) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
   if (!user) {
-    debug(chalk.bgRed("Wrong credentials"));
+    debug(chalk.bgRed("User empty"));
     const error = new Error("Wrong credentials");
     error.code = 401;
     next(error);
