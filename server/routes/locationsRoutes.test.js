@@ -12,6 +12,7 @@ const token =
 let testLocationA;
 let testLocationB;
 
+jest.setTimeout(20000);
 beforeAll(async () => {
   await connectDB(process.env.MONGODB_STRING_TEST);
   server = await initializeServer(process.env.SERVER_PORT);
