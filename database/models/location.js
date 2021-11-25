@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 
 const locationSchema = new Schema({
   name: {
@@ -12,7 +12,8 @@ const locationSchema = new Schema({
   },
 
   type: {
-    type: String,
+    type: [Types.ObjectId],
+    ref: "Type",
     required: true,
   },
 

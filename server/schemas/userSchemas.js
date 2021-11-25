@@ -7,4 +7,11 @@ const loginRequestSchema = {
   }),
 };
 
-module.exports = loginRequestSchema;
+const userSignUpRequestSchema = {
+  body: Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required(),
+  }),
+};
+
+module.exports = { loginRequestSchema, userSignUpRequestSchema };
