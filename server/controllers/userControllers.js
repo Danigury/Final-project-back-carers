@@ -53,9 +53,9 @@ const userSignUp = async (req, res, next) => {
 };
 
 const getUserById = async (req, res, next) => {
-  const { id } = req.params;
+  const { idLocation } = req.params;
   try {
-    const searchedUser = await User.findById(id).populate({
+    const searchedUser = await User.findById(idLocation).populate({
       path: "agenda",
     });
     if (searchedUser) {

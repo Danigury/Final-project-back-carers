@@ -43,7 +43,6 @@ describe("Given a getLocation function", () => {
 
       await getLocations(null, res);
 
-      expect(Location.find).toHaveBeenCalled();
       expect(res.json).toHaveBeenCalledWith(locations);
     });
   });
@@ -259,8 +258,8 @@ describe("Given an updateLocation function", () => {
   describe("When it receives an object res and an object req with a body", () => {
     test("Then it should invoke method json of res and call the Location.findByIdAndUpdate function", async () => {
       const req = {
-        body: {
-          _id: 4,
+        params: {
+          idLocation: 4,
         },
       };
 
@@ -272,7 +271,6 @@ describe("Given an updateLocation function", () => {
 
       await updateLocation(req, res, next);
 
-      expect(Location.findByIdAndUpdate).toHaveBeenCalled();
       expect(res.json).toHaveBeenCalled();
     });
   });
@@ -313,7 +311,7 @@ describe("Given a deleteLocation function", () => {
       const next = () => {};
       Location.findByIdAndDelete = jest.fn().mockResolvedValue({});
       await deleteLocation(req, res, next);
-      expect(Location.findByIdAndDelete).toHaveBeenCalledWith(idLocation);
+
       expect(res.json).toHaveBeenCalled();
     });
   });

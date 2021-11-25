@@ -13,7 +13,7 @@ let testLocationA;
 let testLocationB;
 
 beforeAll(async () => {
-  await connectDB(process.env.MONGODB_STRING);
+  await connectDB(process.env.MONGODB_STRING_TEST);
   server = await initializeServer(process.env.SERVER_PORT);
   await Location.deleteMany();
 });
@@ -26,6 +26,7 @@ afterAll((done) => {
 });
 
 beforeEach(async () => {
+  await Location.deleteMany();
   testLocationA = await Location.create({
     address: {
       coordinates: {
@@ -67,7 +68,7 @@ beforeEach(async () => {
       {
         day: "Jueves",
         time: 45,
-        id: "619ea2fe3209b112d404572c",
+        id: "619ea2fe3209b112d404545v",
       },
     ],
     id: "619ea2fe3209b112d404572c",
@@ -75,7 +76,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await Location.deleteMany();
+  // await Location.deleteMany();
 });
 
 describe("Given a /location route", () => {
@@ -103,15 +104,108 @@ describe("Given a /location/:id", () => {
   });
 });
 
-describe("Given a /location/type/:type", () => {
-  describe("When it receives a get request", () => {
-    test("Then it should respond with a list of location by type", async () => {
+describe("Given a /location/create route", () => {
+  describe("When it receives a post request", () => {
+    test("Then it should respond with a new location", async () => {
+      const testLocation = {
+        address: {
+          coordinates: {
+            longitude: 40123,
+            latitude: 401654,
+          },
+          street: "Carrer Murcia 14",
+          postcode: 78998,
+        },
+        name: "Comedor social",
+        gender: true,
+        type: "Comedor",
+        phonenumber: "665278965",
+        capacity: 40,
+        timetable: [
+          {
+            day: "Jueves",
+            time: 45,
+            id: "619ea2fe3209b112d404571c",
+          },
+        ],
+        id: "619ea2fe3209b112d404571b",
+      };
       const response = await request
-        .get("/location/type/Comedor")
-        .expect(200)
-        .set("Authorization", `Bearer ${token}`);
+        .post("/location/create")
+        .set("Authorization", `Bearer ${token}`)
+        .send(testLocation)
+        .expect(200);
 
-      expect(response.body[0]).toHaveProperty("name", testLocationA.name);
+      expect(response.body).toHaveProperty("name", testLocationA.name);
+    });
+  });
+});
+
+describe("Given a /location/update/:id route", () => {
+  describe("When it receives a put request", () => {
+    test("Then it should respond with a location updated", async () => {
+      const testLocationPut = {
+        address: {
+          coordinates: {
+            longitude: 40123,
+            latitude: 401654,
+          },
+          street: "Carrer Murcia 145",
+          postcode: 78998,
+        },
+        name: "Comedor social Bok",
+        gender: true,
+        type: "Comedor",
+        phonenumber: "665278965",
+        capacity: 40,
+        timetable: [
+          {
+            day: "Jueves",
+            time: 45,
+            id: "619ea2fe3209b112d404545v",
+          },
+        ],
+      };
+
+      const response = await request
+        .put(`/location/${testLocationB.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send(testLocationPut)
+        .expect(200);
+      expect(response.body.name).toBe(testLocationPut.name);
+    });
+  });
+});
+
+describe("Given a /location/delete/:id", () => {
+  describe("When it receives a delete request with a location id", () => {
+    test("Then it should respond with the deleted location", async () => {
+      const response = await request
+        .delete(`/location/${testLocationA.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .expect(200);
+      expect(response.body.name).toBe(testLocationA.name);
+    });
+  });
+
+  describe("When it receives a delete request with a location without id", () => {
+    test("Then it should respond with an error", async () => {
+      const response = await request
+        .delete("/location/asda")
+        .set("Authorization", `Bearer ${token}`)
+        .expect(400);
+
+      expect(response.body).toHaveProperty("error", "Bad request");
+    });
+  });
+  describe("When it receives a delete request with a wrong location id", () => {
+    test("Then it should respond with an error", async () => {
+      const response = await request
+        .delete("/location/delete/618d661e120687524fd0ab11")
+        .set("Authorization", `Bearer ${token}`)
+        .expect(404);
+
+      expect(response.body).toHaveProperty("error", "Page not found");
     });
   });
 });
