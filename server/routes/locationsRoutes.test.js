@@ -102,3 +102,16 @@ describe("Given a /location/:id", () => {
     });
   });
 });
+
+describe("Given a /location/type/:type", () => {
+  describe("When it receives a get request", () => {
+    test("Then it should respond with a list of location by type", async () => {
+      const response = await request
+        .get("/location/type/Comedor")
+        .expect(200)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.body[0]).toHaveProperty("name", testLocationA.name);
+    });
+  });
+});
