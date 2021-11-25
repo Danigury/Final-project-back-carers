@@ -60,8 +60,8 @@ const createLocation = async (req, res, next) => {
 const updateLocation = async (req, res, next) => {
   try {
     debug(chalk.bgBlueBright("Putting location"));
-    const { _id } = req.body;
-    const newLocation = await Location.findByIdAndUpdate(_id, req.body, {
+    const { id } = req.body;
+    const newLocation = await Location.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     res.json(newLocation);
