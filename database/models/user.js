@@ -15,7 +15,7 @@ const userSchema = new Schema({
   },
   agenda: {
     type: [Types.ObjectId],
-    ref: "locations",
+    ref: "Location",
   },
 });
 
