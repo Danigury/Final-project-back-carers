@@ -59,11 +59,13 @@ const createLocation = async (req, res, next) => {
 
 const updateLocation = async (req, res, next) => {
   try {
+    const { idLocation } = req.params;
     debug(chalk.bgBlueBright("Putting location"));
-    const { _id } = req.body;
-    const newLocation = await Location.findByIdAndUpdate(_id, req.body, {
+
+    const newLocation = await Location.findByIdAndUpdate(idLocation, req.body, {
       new: true,
     });
+
     res.json(newLocation);
   } catch (error) {
     debug(chalk.bgRed("Put failed"));
