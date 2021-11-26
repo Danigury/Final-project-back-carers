@@ -52,9 +52,9 @@ const userSignUp = async (req, res, next) => {
   }
 };
 
-const getMyLocation = async (req, res, next) => {
-  const { userId } = req;
-  console.log(userId);
+const getMyLocations = async (req, res, next) => {
+  const { userId } = req.params;
+
   try {
     const searchedUser = await User.findById(userId).populate({
       path: "agenda",
@@ -74,7 +74,7 @@ const getMyLocation = async (req, res, next) => {
 };
 
 const updateUserAgenda = async (req, res, next) => {
-  const { userId } = req;
+  const { userId } = req.params;
 
   const { idLocation } = req.body;
 
@@ -94,4 +94,10 @@ const updateUserAgenda = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = { userLogin, userSignUp, getMyLocation, updateUserAgenda };
+
+module.exports = {
+  userLogin,
+  userSignUp,
+  getMyLocations,
+  updateUserAgenda,
+};

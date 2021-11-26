@@ -44,7 +44,7 @@ beforeEach(async () => {
     timetable: [
       {
         day: "Jueves",
-        time: 45,
+        time: "45",
         id: "619ea2fe3209b112d404571c",
       },
     ],
@@ -67,7 +67,7 @@ beforeEach(async () => {
     timetable: [
       {
         day: "Jueves",
-        time: 45,
+        time: "45",
         id: "619ea2fe3209b112d404545v",
       },
     ],
@@ -124,7 +124,7 @@ describe("Given a /location/create route", () => {
         timetable: [
           {
             day: "Jueves",
-            time: 45,
+            time: "45",
             id: "619ea2fe3209b112d404571c",
           },
         ],
@@ -161,7 +161,7 @@ describe("Given a /location/update/:id route", () => {
         timetable: [
           {
             day: "Jueves",
-            time: 45,
+            time: "45",
             id: "619ea2fe3209b112d404545v",
           },
         ],
