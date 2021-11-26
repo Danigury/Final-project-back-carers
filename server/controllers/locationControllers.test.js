@@ -25,13 +25,13 @@ describe("Given a getLocation function", () => {
         {
           id: 1,
           name: "Menjador Social Gregal",
-          gender: true,
+          woman: true,
           type: "Comedor",
         },
         {
           id: 2,
           name: "Menjador Social Gregal",
-          gender: true,
+          woman: true,
           type: "Comedor",
         },
       ];
@@ -40,8 +40,8 @@ describe("Given a getLocation function", () => {
       const res = {
         json: jest.fn(),
       };
-
-      await getLocations(null, res);
+      const req = {};
+      await getLocations(req, res);
 
       expect(res.json).toHaveBeenCalledWith(locations);
     });

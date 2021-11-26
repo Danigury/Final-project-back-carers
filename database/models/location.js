@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const locationSchema = new Schema({
   name: {
@@ -6,14 +6,13 @@ const locationSchema = new Schema({
     required: true,
   },
 
-  gender: {
+  woman: {
     type: Boolean,
     required: true,
   },
 
   type: {
-    type: [Types.ObjectId],
-    ref: "Type",
+    type: String,
     required: true,
   },
 

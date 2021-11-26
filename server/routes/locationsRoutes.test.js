@@ -8,11 +8,10 @@ const request = supertest(app);
 
 let server;
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWY1YTA5YWQ2NjhjZGE2ZTQzMTM2OSIsImlhdCI6MTYzNzg0NDc3OSwiZXhwIjoxNjM4MDE3NTc5fQ.alUnDxKtrt_6o0yybzjTw_Txl6Zda3HfhHiypxK1g1c";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWY1YTA5YWQ2NjhjZGE2ZTQzMTM2OSIsImlhdCI6MTYzNzgzMzgwOCwiZXhwIjoxNjM4MDA2NjA4fQ.aYwxKOiPRHMloYPd7lb-kWnC1yJ2xGaxmOIJYpy3Bs4";
 let testLocationA;
 let testLocationB;
 
-jest.setTimeout(25000);
 beforeAll(async () => {
   await connectDB(process.env.MONGODB_STRING_TEST);
   server = await initializeServer(process.env.SERVER_PORT);
@@ -38,7 +37,7 @@ beforeEach(async () => {
       postcode: 78998,
     },
     name: "Comedor social",
-    gender: true,
+    woman: true,
     type: "Comedor",
     phonenumber: "665278965",
     capacity: 40,
@@ -61,7 +60,7 @@ beforeEach(async () => {
       postcode: 78998,
     },
     name: "Comedor social B",
-    gender: true,
+    woman: true,
     type: "Comedor",
     phonenumber: "665278965",
     capacity: 40,
@@ -118,7 +117,7 @@ describe("Given a /location/create route", () => {
           postcode: 78998,
         },
         name: "Comedor social",
-        gender: true,
+        woman: true,
         type: "Comedor",
         phonenumber: "665278965",
         capacity: 40,
@@ -155,7 +154,7 @@ describe("Given a /location/update/:id route", () => {
           postcode: 78998,
         },
         name: "Comedor social Bok",
-        gender: true,
+        woman: true,
         type: "Comedor",
         phonenumber: "665278965",
         capacity: 40,

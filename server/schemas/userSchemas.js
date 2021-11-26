@@ -14,4 +14,5 @@ const userSignUpRequestSchema = {
   }),
 };
 
-module.exports = { loginRequestSchema, userSignUpRequestSchema };
+module.exports = loginRequestSchema;
+module.exports = userSignUpRequestSchema;
