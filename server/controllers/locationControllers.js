@@ -3,8 +3,9 @@ const chalk = require("chalk");
 const Location = require("../../database/models/location");
 
 const getLocations = async (req, res) => {
+  const { query } = req;
   debug(chalk.bgYellow("Loading locations"));
-  const locations = await Location.find();
+  const locations = await Location.find(query);
   res.json(locations);
 };
 

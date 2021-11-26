@@ -52,10 +52,11 @@ const userSignUp = async (req, res, next) => {
   }
 };
 
-const getUserById = async (req, res, next) => {
-  const { idLocation } = req.params;
+const getMyLocation = async (req, res, next) => {
+  const { userId } = req;
+  console.log(userId);
   try {
-    const searchedUser = await User.findById(idLocation).populate({
+    const searchedUser = await User.findById(userId).populate({
       path: "agenda",
     });
     if (searchedUser) {
@@ -72,4 +73,25 @@ const getUserById = async (req, res, next) => {
   }
 };
 
-module.exports = { userLogin, userSignUp, getUserById };
+const updateUserAgenda = async (req, res, next) => {
+  const { userId } = req;
+
+  const { idLocation } = req.body;
+
+  try {
+    debug(chalk.bgBlueBright("Putting location"));
+    const userUpdateAgenda = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { agenda: idLocation } },
+      { new: true }
+    );
+
+    res.json(userUpdateAgenda);
+  } catch (error) {
+    debug(chalk.bgRed("Changed failed"));
+    error.message = "Changed failed";
+    error.code = 400;
+    next(error);
+  }
+};
+module.exports = { userLogin, userSignUp, getMyLocation, updateUserAgenda };
