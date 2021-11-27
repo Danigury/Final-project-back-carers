@@ -75,9 +75,7 @@ beforeEach(async () => {
   });
 });
 
-afterEach(async () => {
-  // await Location.deleteMany();
-});
+afterEach(async () => {});
 
 describe("Given a /location route", () => {
   describe("When it receives a get request", () => {

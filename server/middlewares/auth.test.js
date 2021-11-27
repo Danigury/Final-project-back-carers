@@ -2,9 +2,6 @@ const jwt = require("jsonwebtoken");
 const auth = require("./auth");
 
 jest.mock("jsonwebtoken");
-// jest.mock("jsonwebtoken", () => ({
-//   verify: jest.fn().mockRejectedValue(),
-// }));
 
 describe("Given an auth middleware", () => {
   describe("When it receives a request without a correct Authorization header", () => {
