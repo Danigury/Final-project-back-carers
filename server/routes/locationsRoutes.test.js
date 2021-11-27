@@ -8,7 +8,7 @@ const request = supertest(app);
 
 let server;
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWY1YTA5YWQ2NjhjZGE2ZTQzMTM2OSIsImlhdCI6MTYzNzgzMzgwOCwiZXhwIjoxNjM4MDA2NjA4fQ.aYwxKOiPRHMloYPd7lb-kWnC1yJ2xGaxmOIJYpy3Bs4";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWY1YTA5YWQ2NjhjZGE2ZTQzMTM2OSIsImlhdCI6MTYzODAzMzQ3OCwiZXhwIjoxNjM4MjA2Mjc4fQ.3jWYvdCy80p1kI3CEuCKtxcaPv1uUmE3CaFVBwWd0Vs";
 let testLocationA;
 let testLocationB;
 
